@@ -20,6 +20,7 @@ import usuarios.UsuarioDAO;
 public class FormLogin extends javax.swing.JFrame {
 
     int x, y;
+    int z;
     /**
      * Creates new form Login
      */
