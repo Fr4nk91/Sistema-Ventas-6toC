@@ -220,6 +220,7 @@ public class FormProductos extends javax.swing.JInternalFrame {
         eliminarTodo.setForeground(new java.awt.Color(255, 255, 255));
         eliminarTodo.setText("ELIMINAR TODO");
         eliminarTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        eliminarTodo.setVisible(false);
         eliminarTodo.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
         eliminarTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

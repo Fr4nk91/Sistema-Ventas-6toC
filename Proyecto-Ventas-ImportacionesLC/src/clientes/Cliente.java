@@ -7,15 +7,16 @@ package clientes;
 
 public class Cliente {
 
-    public static String LISTAR = "SELECT * FROM clientes ORDER BY apellido WHERE eliminado = 0";
-    public static String REGISTRAR = "INSERT INTO clientes(nombre, apellido, direccion, telefono, email) "
-            + "VALUES(?,?,?,?,?)";
+    public static String LISTAR = "SELECT idcliente, nombre, apellido,documento, telefono, email, direccion FROM clientes WHERE eliminado = 0 ORDER BY apellido ";
+    public static String REGISTRAR = "INSERT INTO clientes(nombre, apellido, direccion, telefono, email, documento) "
+            + "VALUES(?,?,?,?,?,?)";
     public static String ACTUALIZAR = "UPDATE clientes SET "
             + "nombre=?, "
             + "apellido=?, "
             + "direccion=?, "
             + "telefono=?, "
-            + "email=? "
+            + "email=?, "
+            + "documento=? "
             + "WHERE idcliente=?";
     public static String ELIMINAR = "UPDATE clientes SET eliminado = 1 WHERE idcliente = ?";
     public static String ELIMINAR_TODO = "TRUNCATE TABLE clientes";
@@ -26,6 +27,15 @@ public class Cliente {
     private String direccion;
     private String telefono;
     private String email;
+    private String documento;
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
 
     // Getters and setters
 

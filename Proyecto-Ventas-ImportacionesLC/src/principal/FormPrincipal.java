@@ -9,11 +9,18 @@ import alertas.principal.ErrorAlert;
 import alertas.principal.FadeEffect;
 import alertas.principal.WarningAlertCerrar;
 import alertas.principal.WarningAlertSalir;
+import clientes.FormClientes;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import static principal.FormPrincipalAdministrador.cerra;
 import static principal.FormPrincipalAdministrador.escritorio;
+import static principal.FormPrincipalAdministrador.estacerrado;
+import productos.FormProductos;
+import salidas.FormSalidas;
+import trabajadores.FormTrabajadores;
+import usuarios.FormUsuarios;
+import ventas.FormCorteCaja;
 import ventas.FormVentas;
 
 /**
@@ -26,8 +33,16 @@ public class FormPrincipal extends javax.swing.JFrame {
     private boolean minimiza = false;
 
     public static boolean cerra = false;
-    private FormVentas ventas = null;
+   // private FormVentas ventas = null;
 
+        public FormClientes cliente = null;
+    public FormTrabajadores trabajador = null;
+    public FormProductos producto = null;
+    private FormSalidas salidas = null;
+    private FormUsuarios usuarios = null;
+    public static FormCorteCaja lista = null;
+    public static FormVentas ventas = null;
+    
     public static boolean estacerrado(Object obj) {
         JInternalFrame[] activos = escritorio.getAllFrames();
         boolean cerrado = true;
@@ -74,8 +89,8 @@ public class FormPrincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnAbout = new principal.MaterialButtomRectangle();
-        btnUsuarios = new principal.MaterialButtomRectangle();
         cerrarSesion = new principal.MaterialButtomRectangle();
+        btnClientes = new principal.MaterialButtomRectangle();
         escritorio = new principal.Escritorio();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -214,17 +229,6 @@ public class FormPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnUsuarios.setBackground(new java.awt.Color(58, 159, 171));
-        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsuarios.setText("USUARIOS");
-        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnUsuarios.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsuariosActionPerformed(evt);
-            }
-        });
-
         cerrarSesion.setBackground(new java.awt.Color(58, 159, 171));
         cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         cerrarSesion.setText("CERRAR SESIÓN");
@@ -233,6 +237,17 @@ public class FormPrincipal extends javax.swing.JFrame {
         cerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cerrarSesionActionPerformed(evt);
+            }
+        });
+
+        btnClientes.setBackground(new java.awt.Color(58, 159, 171));
+        btnClientes.setForeground(new java.awt.Color(255, 255, 255));
+        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnClientes.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        btnClientes.setLabel("CLIENTES");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
             }
         });
 
@@ -245,14 +260,16 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnGastos, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,22 +279,22 @@ public class FormPrincipal extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAbout, btnGastos, btnProductos, btnUsuarios, btnVentas});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAbout, btnGastos, btnProductos, btnVentas});
 
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
                 .addComponent(cerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
@@ -291,7 +308,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                     .addGap(34, 34, 34)))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAbout, btnGastos, btnProductos, btnUsuarios, btnVentas, cerrarSesion});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAbout, btnGastos, btnProductos, btnVentas, cerrarSesion});
 
         escritorio.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -362,11 +379,14 @@ public class FormPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        ErrorAlert er = new ErrorAlert(new JFrame(), true);
-        er.titulo.setText("ADVERTENCIA");
-        er.msj.setText("ACCESO RESTRINGIDO");
-        er.msj1.setText("");
-        er.setVisible(true);
+        if (estacerrado(producto)) {
+            producto = new FormProductos();
+            int width = escritorio.getWidth();
+            int Height = escritorio.getHeight();
+            producto.setSize(width, Height);
+            escritorio.add(producto);
+            producto.show();
+        }
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGastosActionPerformed
@@ -381,14 +401,6 @@ public class FormPrincipal extends javax.swing.JFrame {
         new about.About(this, true).setVisible(true);
     }//GEN-LAST:event_btnAboutActionPerformed
 
-    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        ErrorAlert er = new ErrorAlert(new JFrame(), true);
-        er.titulo.setText("ADVERTENCIA");
-        er.msj.setText("ACCESO RESTRINGIDO");
-        er.msj1.setText("");
-        er.setVisible(true);
-    }//GEN-LAST:event_btnUsuariosActionPerformed
-
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
         WarningAlertSalir wa = new WarningAlertSalir(this, true);
         wa.titulo.setText("¿ESTAS SEGURO?");
@@ -401,6 +413,17 @@ public class FormPrincipal extends javax.swing.JFrame {
             new login.FormLogin().setVisible(true);
         }
     }//GEN-LAST:event_cerrarSesionActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        if (estacerrado(cliente)) {
+            cliente = new FormClientes();
+            int width = escritorio.getWidth();
+            int Height = escritorio.getHeight();
+            cliente.setSize(width, Height);
+            escritorio.add(cliente);
+            cliente.show();
+        }
+    }//GEN-LAST:event_btnClientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -446,9 +469,9 @@ public class FormPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private principal.MaterialButtomRectangle btnAbout;
+    private principal.MaterialButtomRectangle btnClientes;
     private principal.MaterialButtomRectangle btnGastos;
     private principal.MaterialButtomRectangle btnProductos;
-    private principal.MaterialButtomRectangle btnUsuarios;
     private principal.MaterialButtomRectangle btnVentas;
     private principal.MaterialButton cerrar;
     private principal.MaterialButtomRectangle cerrarSesion;

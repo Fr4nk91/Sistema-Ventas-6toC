@@ -5,21 +5,14 @@
  */
 package clientes;
 
-import productos.ModalProductoM;
-import productos.ProductoDAO;
 import alertas.principal.ErrorAlert;
-import alertas.principal.WarningAlertP;
-import alertas.principal.WarningAlertP1;
+import alertas.principal.WarningAlertT;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import tabla.EstiloTablaHeader;
 import tabla.EstiloTablaRenderer;
 import tabla.MyScrollbarUI;
 
-/**
- *
- * @author Rojeru San
- */
 public class FormClientes extends javax.swing.JInternalFrame {
 
     /**
@@ -35,7 +28,7 @@ public class FormClientes extends javax.swing.JInternalFrame {
         jScrollPane1.getHorizontalScrollBar().setUI(new MyScrollbarUI());
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 
-        ProductoDAO.listar("");
+        ClienteDAO.listar("");
     }
 
     public static void seleccionaFila(String id) {
@@ -94,7 +87,7 @@ public class FormClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clientes/icono.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clientes/clientes.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -140,11 +133,11 @@ public class FormClientes extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "CÓDIGO", "NOMBRE", "DESCRIPCIÓN", "TIPO PRODUCTO", "$PRECIO", "STOCK"
+                "CÓDIGO", "NOMBRE", "APELLIDO", "DOCUMENTO", "TELÉFONO", "EMAIL", "DIRECCIÓN"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, true, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -194,7 +187,7 @@ public class FormClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/productos/campo-buscar.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/trabajadores/campo-buscar.png"))); // NOI18N
 
         modificar.setBackground(new java.awt.Color(58, 159, 171));
         modificar.setForeground(new java.awt.Color(255, 255, 255));
@@ -222,7 +215,7 @@ public class FormClientes extends javax.swing.JInternalFrame {
         eliminarTodo.setForeground(new java.awt.Color(255, 255, 255));
         eliminarTodo.setText("ELIMINAR TODO");
         eliminarTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        eliminarTodo.setFont(new java.awt.Font("Roboto Medium", 1, 14));
+        eliminarTodo.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
         eliminarTodo.setVisible(false);
         eliminarTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,6 +226,7 @@ public class FormClientes extends javax.swing.JInternalFrame {
         nuevo.setBackground(new java.awt.Color(58, 159, 171));
         nuevo.setForeground(new java.awt.Color(255, 255, 255));
         nuevo.setText("NUEVO CLIENTE");
+        nuevo.setActionCommand("NUEVO CLIENTE");
         nuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         nuevo.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
         nuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -317,23 +311,23 @@ public class FormClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cerrarActionPerformed
 
     private void eliminarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarTodoActionPerformed
-        if (this.tabla.getRowCount() < 1) {
-            ErrorAlert er = new ErrorAlert(new JFrame(), true);
-            er.titulo.setText("ADVERTENCIA");
-            er.msj.setText("LA TABLA ESTA VACÍA");
-            er.msj1.setText("");
-            er.setVisible(true);
-        } else {
-            WarningAlertP1 wa = new WarningAlertP1(new JFrame(), true);
-            wa.titulo.setText("¿ESTAS SEGURO?");
-            wa.msj.setText("SE BORRARAN TODOS LOS");
-            wa.msj1.setText("REGISTROS PERMANENTEMENTE");
-            wa.setVisible(true);
-        }
+//        if (this.tabla.getRowCount() < 1) {
+//            ErrorAlert er = new ErrorAlert(new JFrame(), true);
+//            er.titulo.setText("ADVERTENCIA");
+//            er.msj.setText("LA TABLA ESTA VACÍA");
+//            er.msj1.setText("");
+//            er.setVisible(true);
+//        } else {
+//            WarningAlertP1 wa = new WarningAlertP1(new JFrame(), true);
+//            wa.titulo.setText("¿ESTAS SEGURO?");
+//            wa.msj.setText("SE BORRARAN TODOS LOS");
+//            wa.msj1.setText("REGISTROS PERMANENTEMENTE");
+//            wa.setVisible(true);
+//        }
     }//GEN-LAST:event_eliminarTodoActionPerformed
 
     private void nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoActionPerformed
-        ModalProductoM mp = new ModalProductoM(new JFrame(), true);
+        ModalClienteM mp = new ModalClienteM(new JFrame(), true);
         mp.titulo.setText("REGISTRAR");
         mp.registrar.setText("REGISTRAR");
         mp.setVisible(true);
@@ -357,13 +351,14 @@ public class FormClientes extends javax.swing.JInternalFrame {
 
                 int fila = this.tabla.getSelectedRow();
 
-                ModalProductoM mp = new ModalProductoM(new JFrame(), true);
+                ModalClienteM mp = new ModalClienteM(new JFrame(), true);
                 mp.id.setText(this.tabla.getValueAt(fila, 0).toString());
                 mp.nombre.setText(this.tabla.getValueAt(fila, 1).toString());
-                mp.descripcion.setText(this.tabla.getValueAt(fila, 2).toString());
-                mp.tipo.setSelectedItem(this.tabla.getValueAt(fila, 3).toString());
-                mp.precio.setText(this.tabla.getValueAt(fila, 4).toString());
-                mp.stock.setText(this.tabla.getValueAt(fila, 5).toString());
+                mp.apellido.setText(this.tabla.getValueAt(fila, 2).toString());
+                mp.documento.setText(tabla.getValueAt(fila, 3).toString());
+                mp.telefono.setText(this.tabla.getValueAt(fila, 4).toString());
+                mp.email.setText(this.tabla.getValueAt(fila, 5).toString());
+                mp.direccion.setText(this.tabla.getValueAt(fila, 6).toString());
                 mp.titulo.setText("MODIFICAR");
                 mp.registrar.setText("GUARDAR");
                 mp.setVisible(true);
@@ -387,7 +382,7 @@ public class FormClientes extends javax.swing.JInternalFrame {
                 er.setVisible(true);
             } else {
                 int fila = this.tabla.getSelectedRow();
-                WarningAlertP wa = new WarningAlertP(new JFrame(), true);
+                WarningAlertT wa = new WarningAlertT(new JFrame(), true);
                 wa.id.setText(this.tabla.getValueAt(fila, 0).toString());
                 wa.titulo.setText("¿ESTAS SEGURO?");
                 wa.msj.setText("SE BORRARA PERMANENTEMENTE");
@@ -398,7 +393,7 @@ public class FormClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyReleased
-        ProductoDAO.listar(this.buscar.getText());
+        ClienteDAO.listar(this.buscar.getText());
     }//GEN-LAST:event_buscarKeyReleased
 
     private void buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyTyped

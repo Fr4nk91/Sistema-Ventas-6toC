@@ -9,6 +9,7 @@ import productos.FormProductos;
 import alertas.principal.FadeEffect;
 import alertas.principal.WarningAlertCerrar;
 import alertas.principal.WarningAlertSalir;
+import clientes.FormClientes;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -27,6 +28,7 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
     boolean b = true;
     private boolean minimiza = false;
     public static boolean cerra = false;
+    public FormClientes cliente = null;
     public FormTrabajadores trabajador = null;
     public FormProductos producto = null;
     private FormSalidas salidas = null;
@@ -83,8 +85,8 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
         btnUsuarios = new principal.MaterialButtomRectangle();
         btnAbout = new principal.MaterialButtomRectangle();
         cerrarSesion = new principal.MaterialButtomRectangle();
-        btnUsuarios1 = new principal.MaterialButtomRectangle();
-        btnUsuarios2 = new principal.MaterialButtomRectangle();
+        btnClientes = new principal.MaterialButtomRectangle();
+        btnTrabajadores = new principal.MaterialButtomRectangle();
         escritorio = new principal.Escritorio();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -245,25 +247,25 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
             }
         });
 
-        btnUsuarios1.setBackground(new java.awt.Color(58, 159, 171));
-        btnUsuarios1.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsuarios1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnUsuarios1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        btnUsuarios1.setLabel("CLIENTES");
-        btnUsuarios1.addActionListener(new java.awt.event.ActionListener() {
+        btnClientes.setBackground(new java.awt.Color(58, 159, 171));
+        btnClientes.setForeground(new java.awt.Color(255, 255, 255));
+        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnClientes.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        btnClientes.setLabel("CLIENTES");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsuarios1ActionPerformed(evt);
+                btnClientesActionPerformed(evt);
             }
         });
 
-        btnUsuarios2.setBackground(new java.awt.Color(58, 159, 171));
-        btnUsuarios2.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsuarios2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnUsuarios2.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        btnUsuarios2.setLabel("TRABAJADORES");
-        btnUsuarios2.addActionListener(new java.awt.event.ActionListener() {
+        btnTrabajadores.setBackground(new java.awt.Color(58, 159, 171));
+        btnTrabajadores.setForeground(new java.awt.Color(255, 255, 255));
+        btnTrabajadores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnTrabajadores.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        btnTrabajadores.setLabel("TRABAJADORES");
+        btnTrabajadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsuarios2ActionPerformed(evt);
+                btnTrabajadoresActionPerformed(evt);
             }
         });
 
@@ -284,8 +286,8 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
                             .addComponent(cerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUsuarios1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUsuarios2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnTrabajadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,9 +307,9 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUsuarios1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUsuarios2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -329,9 +331,6 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAbout, btnGastos, btnProductos, btnUsuarios, btnVentas, cerrarSesion});
-
-        btnUsuarios1.getAccessibleContext().setAccessibleName("CLIENTES");
-        btnUsuarios2.getAccessibleContext().setAccessibleName("TRABAJADORES");
 
         escritorio.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -444,11 +443,18 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
         wa.setVisible(true);
     }//GEN-LAST:event_cerrarActionPerformed
 
-    private void btnUsuarios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarios1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUsuarios1ActionPerformed
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        if (estacerrado(cliente)) {
+            cliente = new FormClientes();
+            int width = escritorio.getWidth();
+            int Height = escritorio.getHeight();
+            cliente.setSize(width, Height);
+            escritorio.add(cliente);
+            cliente.show();
+        }
+    }//GEN-LAST:event_btnClientesActionPerformed
 
-    private void btnUsuarios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarios2ActionPerformed
+    private void btnTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrabajadoresActionPerformed
         if (estacerrado(trabajador)) {
             trabajador = new FormTrabajadores();
             int width = escritorio.getWidth();
@@ -457,7 +463,7 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
             escritorio.add(trabajador);
             trabajador.show();
         }
-    }//GEN-LAST:event_btnUsuarios2ActionPerformed
+    }//GEN-LAST:event_btnTrabajadoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -499,11 +505,11 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private principal.MaterialButtomRectangle btnAbout;
+    private principal.MaterialButtomRectangle btnClientes;
     private principal.MaterialButtomRectangle btnGastos;
     private principal.MaterialButtomRectangle btnProductos;
+    private principal.MaterialButtomRectangle btnTrabajadores;
     private principal.MaterialButtomRectangle btnUsuarios;
-    private principal.MaterialButtomRectangle btnUsuarios1;
-    private principal.MaterialButtomRectangle btnUsuarios2;
     private principal.MaterialButtomRectangle btnVentas;
     private principal.MaterialButton cerrar;
     private principal.MaterialButtomRectangle cerrarSesion;

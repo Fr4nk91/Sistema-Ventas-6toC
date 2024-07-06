@@ -344,13 +344,14 @@
             <Component class="componentes.org1.bolivia.combo.SComboBox" name="tipo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="6">
+                  <StringArray count="7">
                     <StringItem index="0" value="ELEGIR TIPO TRABAJADOR"/>
                     <StringItem index="1" value="GERENTE"/>
-                    <StringItem index="2" value="CONTADOR"/>
-                    <StringItem index="3" value="ANALISTA"/>
-                    <StringItem index="4" value="SUPERVISOR"/>
-                    <StringItem index="5" value="ASISTENTE"/>
+                    <StringItem index="2" value="ADMINISTRADOR"/>
+                    <StringItem index="3" value="CONTADOR"/>
+                    <StringItem index="4" value="ANALISTA"/>
+                    <StringItem index="5" value="SUPERVISOR"/>
+                    <StringItem index="6" value="ASISTENTE"/>
                   </StringArray>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

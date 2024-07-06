@@ -28,6 +28,7 @@ public class ClienteDAO {
             ps.setString(3, uc.getDireccion());
             ps.setString(4, uc.getTelefono());
             ps.setString(5, uc.getEmail());
+            ps.setString(6, uc.getDocumento());
             rsu = ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -46,7 +47,8 @@ public class ClienteDAO {
             ps.setString(3, uc.getDireccion());
             ps.setString(4, uc.getTelefono());
             ps.setString(5, uc.getEmail());
-            ps.setInt(6, uc.getId());
+            ps.setString(6, uc.getDocumento());
+            ps.setInt(7, uc.getId());
             rsu = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -94,13 +96,13 @@ public class ClienteDAO {
         if (busca.equals("")) {
             sql = Cliente.LISTAR;
         } else {
-            sql = "SELECT * FROM clientes WHERE (idcliente LIKE'" + busca + "%' OR "
+            sql = "SELECT idcliente, nombre, apellido, documento, telefono, email, direccion  FROM clientes WHERE (idcliente LIKE'" + busca + "%' OR "
                     + "nombre LIKE'" + busca + "%' OR apellido LIKE'" + busca + "%' OR "
                     + "direccion LIKE'" + busca + "%' OR telefono LIKE'" + busca + "%' OR "
-                    + "email LIKE'" + busca + "%') WHERE eliminado = 0 "
+                    + "email LIKE'" + busca + "%') AND eliminado = 0 "
                     + "ORDER BY idcliente";
         }
-        String datos[] = new String[6];
+        String datos[] = new String[7];
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -108,9 +110,11 @@ public class ClienteDAO {
                 datos[0] = rs.getString("idcliente");
                 datos[1] = rs.getString("nombre");
                 datos[2] = rs.getString("apellido");
-                datos[3] = rs.getString("direccion");
+                datos[3] = rs.getString("documento");
                 datos[4] = rs.getString("telefono");
                 datos[5] = rs.getString("email");
+                datos[6] = rs.getString("direccion");
+             
                 modelo.addRow(datos);
             }
         } catch (SQLException ex) {
@@ -118,6 +122,27 @@ public class ClienteDAO {
         }
     }
 
+public static boolean esDocumentoUnico(String documento, int idCliente) {
+    boolean esUnico = true;
+    String sql = "SELECT COUNT(*) FROM clientes WHERE documento = ? AND idcliente != ? AND eliminado = 0";
+    try (PreparedStatement ps = cn.prepareStatement(sql)) {
+        ps.setString(1, documento);
+        ps.setInt(2, idCliente);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                if (count > 0) {
+                    esUnico = false;
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return esUnico;
+}
+
+    
     public static int extraerID() {
         int c = 0;
         String SQL = "SELECT MAX(idcliente) FROM clientes";

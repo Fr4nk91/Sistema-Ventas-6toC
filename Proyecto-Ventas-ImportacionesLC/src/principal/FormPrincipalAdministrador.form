@@ -209,8 +209,8 @@
                                   <Component id="cerrarSesion" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnUsuarios" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnAbout" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnUsuarios1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnUsuarios2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnClientes" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnTrabajadores" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -234,9 +234,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnProductos" linkSize="6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnUsuarios1" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="btnClientes" min="-2" pref="54" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnUsuarios2" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="btnTrabajadores" min="-2" pref="54" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnUsuarios" linkSize="6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -418,7 +418,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cerrarSesionActionPerformed"/>
               </Events>
             </Component>
-            <Component class="principal.MaterialButtomRectangle" name="btnUsuarios1">
+            <Component class="principal.MaterialButtomRectangle" name="btnClientes">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ab" green="9f" red="3a" type="rgb"/>
@@ -435,10 +435,10 @@
                 <Property name="label" type="java.lang.String" value="CLIENTES"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsuarios1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClientesActionPerformed"/>
               </Events>
             </Component>
-            <Component class="principal.MaterialButtomRectangle" name="btnUsuarios2">
+            <Component class="principal.MaterialButtomRectangle" name="btnTrabajadores">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ab" green="9f" red="3a" type="rgb"/>
@@ -455,7 +455,7 @@
                 <Property name="label" type="java.lang.String" value="TRABAJADORES"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsuarios2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTrabajadoresActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trabajadores;
+package clientes;
 
 import alertas.principal.AWTUtilities;
 import alertas.principal.ErrorAlert;
@@ -13,9 +13,9 @@ import java.awt.event.KeyEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
-import trabajadores.FormTrabajadores;
-import trabajadores.Trabajador;
-import trabajadores.TrabajadorDAO;
+import clientes.FormClientes;
+import clientes.Cliente;
+import clientes.ClienteDAO;
 
 
 public class ModalClienteM extends javax.swing.JDialog {
@@ -28,7 +28,6 @@ public class ModalClienteM extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         AWTUtilities.setOpaque(this, false);
-        this.tipo.setCursor(new Cursor(12));
         this.id.setVisible(false);
         Ubicar(0);
         this.nombre.requestFocus();
@@ -43,8 +42,8 @@ public class ModalClienteM extends javax.swing.JDialog {
         this.direccion.setText("");
         this.telefono.setText("");
         this.email.setText("");
-        this.tipo.setSelectedIndex(0);
-        TrabajadorDAO.listar("");
+        this.documento.setText("");
+        ClienteDAO.listar("");
     }
 
     /**
@@ -71,8 +70,8 @@ public class ModalClienteM extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         direccion = new app.bolivia.swing.JCTextField();
         jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        tipo = new componentes.org1.bolivia.combo.SComboBox();
+        documento = new app.bolivia.swing.JCTextField();
+        jLabel11 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         limpiar = new principal.MaterialButton();
         registrar = new principal.MaterialButton();
@@ -213,22 +212,19 @@ public class ModalClienteM extends javax.swing.JDialog {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/trabajadores/campo.png"))); // NOI18N
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, -1));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/trabajadores/campo-tipo-.png"))); // NOI18N
-        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
+        documento.setBorder(null);
+        documento.setForeground(new java.awt.Color(58, 159, 171));
+        documento.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        documento.setPlaceholder("DOCUMENTO");
+        documento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                documentoKeyTyped(evt);
+            }
+        });
+        jPanel4.add(documento, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 240, 30));
 
-        tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ELEGIR TIPO TRABAJADOR", "GERENTE", "CONTADOR", "ANALISTA", "SUPERVISOR", "ASISTENTE" }));
-        tipo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        tipo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                tipoItemStateChanged(evt);
-            }
-        });
-        tipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tipoActionPerformed(evt);
-            }
-        });
-        jPanel4.add(tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 240, 30));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/trabajadores/campo.png"))); // NOI18N
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
 
         panel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 420, 500));
 
@@ -341,7 +337,7 @@ public class ModalClienteM extends javax.swing.JDialog {
                 || this.apellido.getText().equals("")
                 || this.direccion.getText().equals("")
                 || this.email.getText().equals("")
-                || this.tipo.getSelectedIndex() == 0 
+                || this.documento.getText().equals("")
                 || this.telefono.getText().equals("")) {
 
             ErrorAlert er = new ErrorAlert(new JFrame(), true);
@@ -350,25 +346,42 @@ public class ModalClienteM extends javax.swing.JDialog {
             er.msj1.setText("");
             er.setVisible(true);
 
+        } else if (this.documento.getText().length() != 8 || !this.documento.getText().matches("\\d{8}")) {
+        ErrorAlert er = new ErrorAlert(new JFrame(), true);
+        er.titulo.setText("ADVERTENCIA");
+        er.msj.setText("EL DOCUMENTO DEBE TENER 8 DIGITOS");
+        er.msj1.setText("");
+        er.setVisible(true);
+        
+        } else{
+            
+            int idCliente = getIdCliente();
+            if (!ClienteDAO.esDocumentoUnico(this.documento.getText(),idCliente)) {
+                ErrorAlert er = new ErrorAlert(new JFrame(), true);
+                er.titulo.setText("ADVERTENCIA");
+                er.msj.setText("EL DOCUMENTO YA EXISTE");
+                er.msj1.setText("");
+                er.setVisible(true);
+            
         } else {
 
             if (this.registrar.getText().equals("GUARDAR")) {
 
-                Trabajador s = new Trabajador();
+                Cliente s = new Cliente();
 
                 s.setNombre(this.nombre.getText());
                 s.setApellido(this.apellido.getText());
-                s.setCargo(this.tipo.getSelectedItem().toString());
+                s.setDocumento(this.documento.getText());
                 s.setTelefono(this.telefono.getText());
                 s.setDireccion(this.direccion.getText());
                 s.setEmail(this.email.getText());
                 s.setId(Integer.parseInt(this.id.getText()));
 
-                int opcion = TrabajadorDAO.actualizar(s);
+                int opcion = ClienteDAO.actualizar(s);
                 if (opcion != 0) {
                     String fila = this.id.getText();
-                    TrabajadorDAO.listar("");
-                    FormTrabajadores.seleccionaFila(fila);
+                    ClienteDAO.listar("");
+                    FormClientes.seleccionaFila(fila);
                     SuccessAlert sa = new SuccessAlert(new JFrame(), true);
                     sa.titulo.setText("¡REGISTRO EXITOSO!");
                     sa.msj.setText("SE HAN GUARDADO LOS CAMBIOS");
@@ -378,30 +391,30 @@ public class ModalClienteM extends javax.swing.JDialog {
 
             } else {
 
-                Trabajador s = new Trabajador();
+                Cliente s = new Cliente();
 
                 s.setNombre(this.nombre.getText());
                 s.setApellido(this.apellido.getText());
-                s.setCargo(this.tipo.getSelectedItem().toString());
+                s.setDocumento(this.documento.getText());
                 s.setTelefono(this.telefono.getText());
                 s.setDireccion(this.direccion.getText());
                 s.setEmail(this.email.getText());
 
-                int opcion = TrabajadorDAO.registrar(s);
+                int opcion = ClienteDAO.registrar(s);
                 if (opcion != 0) {
-                    String fila = String.valueOf(TrabajadorDAO.extraerID());
+                    String fila = String.valueOf(ClienteDAO.extraerID());
                     limpiarCampos();
-                    FormTrabajadores.seleccionaFila(fila);
+                    FormClientes.seleccionaFila(fila);
                     SuccessAlert sa = new SuccessAlert(new JFrame(), true);
                     sa.titulo.setText("¡REGISTRO EXITOSO!");
                     sa.msj.setText("SE HA REGISTRADO UN");
-                    sa.msj1.setText("NUEVO TRABAJADOR");
+                    sa.msj1.setText("NUEVO CLIENTE");
                     sa.setVisible(true);
                 }
             }
         }
     }//GEN-LAST:event_registrarActionPerformed
-
+    }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         task = new TimerTask() {
             @Override
@@ -422,7 +435,7 @@ public class ModalClienteM extends javax.swing.JDialog {
     private void registrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_registrarKeyTyped
         if ((evt.getKeyChar() == KeyEvent.VK_ENTER)) {
             if (this.nombre.getText().equals("") || this.apellido.getText().equals("")
-                    || this.tipo.getSelectedIndex() == 0 || this.telefono.getText().equals("")) {
+                    || this.documento.getText().equals("") || this.telefono.getText().equals("")) {
 
                 ErrorAlert er = new ErrorAlert(new JFrame(), true);
                 er.titulo.setText("ADVERTENCIA");
@@ -430,25 +443,43 @@ public class ModalClienteM extends javax.swing.JDialog {
                 er.msj1.setText("");
                 er.setVisible(true);
 
+        } else if (this.documento.getText().length() != 8 || !this.documento.getText().matches("\\d{8}")) {
+        ErrorAlert er = new ErrorAlert(new JFrame(), true);
+        er.titulo.setText("ADVERTENCIA");
+        er.msj.setText("EL DOCUMENTO DEBE TENER 8 DIGITOS");
+        er.msj1.setText("");
+        er.setVisible(true);
+        
+        } else{
+            int idCliente = getIdCliente();
+            if (!ClienteDAO.esDocumentoUnico(this.documento.getText(), idCliente)) {
+        ErrorAlert er = new ErrorAlert(new JFrame(), true);
+        er.titulo.setText("ADVERTENCIA");
+        er.msj.setText("EL DOCUMENTO YA EXISTE");
+        er.msj1.setText("");
+        er.setVisible(true);
+
+        
+            
             } else {
 
                 if (this.registrar.getText().equals("GUARDAR")) {
 
-                    Trabajador s = new Trabajador();
+                    Cliente s = new Cliente();
 
                     s.setNombre(this.nombre.getText());
                     s.setApellido(this.apellido.getText());
-                    s.setCargo(this.tipo.getSelectedItem().toString());
                     s.setTelefono(this.telefono.getText());
+                    s.setDocumento(this.telefono.getText());
                     s.setDireccion(this.direccion.getText());
                     s.setEmail(this.email.getText());
 
 
-                    int opcion = TrabajadorDAO.actualizar(s);
+                    int opcion = ClienteDAO.actualizar(s);
                     if (opcion != 0) {
                         String fila = this.id.getText();
-                        TrabajadorDAO.listar("");
-                        FormTrabajadores.seleccionaFila(fila);
+                        ClienteDAO.listar("");
+                        FormClientes.seleccionaFila(fila);
                         SuccessAlert sa = new SuccessAlert(new JFrame(), true);
                         sa.titulo.setText("¡REGISTRO EXITOSO!");
                         sa.msj.setText("SE HAN GUARDADO LOS CAMBIOS");
@@ -458,49 +489,66 @@ public class ModalClienteM extends javax.swing.JDialog {
 
                 } else {
 
-                    Trabajador s = new Trabajador();
+                    Cliente s = new Cliente();
 
                     s.setNombre(this.nombre.getText());
                     s.setApellido(this.apellido.getText());
-                    s.setCargo(this.tipo.getSelectedItem().toString());
+                    s.setDocumento(this.telefono.getText());
                     s.setTelefono(this.telefono.getText());
                     s.setDireccion(this.direccion.getText());
                     s.setEmail(this.email.getText());
-                    int opcion = TrabajadorDAO.registrar(s);
+                    int opcion = ClienteDAO.registrar(s);
                     if (opcion != 0) {
-                        String fila = String.valueOf(TrabajadorDAO.extraerID());
+                        String fila = String.valueOf(ClienteDAO.extraerID());
                         limpiarCampos();
-                        FormTrabajadores.seleccionaFila(fila);
+                        FormClientes.seleccionaFila(fila);
                         SuccessAlert sa = new SuccessAlert(new JFrame(), true);
                         sa.titulo.setText("¡REGISTRO EXITOSO!");
                         sa.msj.setText("SE HA REGISTRADO UN");
-                        sa.msj1.setText("NUEVO TRABAJADOR");
+                        sa.msj1.setText("NUEVO CLIENTE");
                         sa.setVisible(true);
                     }
                 }
             }
         }
     }//GEN-LAST:event_registrarKeyTyped
-
+    }
     private void emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailKeyTyped
 
     }//GEN-LAST:event_emailKeyTyped
-
-    private void tipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoItemStateChanged
-    }//GEN-LAST:event_tipoItemStateChanged
 
     private void direccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_direccionKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_direccionKeyTyped
 
-    private void tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tipoActionPerformed
-
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailActionPerformed
 
+    private void documentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_documentoKeyTyped
+        char c = evt.getKeyChar();
+        // Verificar si el carácter no es un dígito
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignorar el carácter no válido
+        }
+
+        // Obtener el texto actual del campo
+        String texto = ((javax.swing.JTextField) evt.getSource()).getText();
+
+        // Verificar si el texto actual más el nuevo carácter superan los 8 dígitos
+        if (texto.length() >= 8) {
+            evt.consume(); // Ignorar el carácter adicional si el límite se ha alcanzado
+        }
+    }//GEN-LAST:event_documentoKeyTyped
+
+    private int getIdCliente() {
+        
+        try{
+        return Integer.parseInt(this.id.getText());
+        }catch(NumberFormatException e){
+            return 0;
+        }  
+    }
     /**
      * @param args the command line arguments
      */
@@ -598,6 +646,198 @@ public class ModalClienteM extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -618,9 +858,10 @@ public class ModalClienteM extends javax.swing.JDialog {
     public static app.bolivia.swing.JCTextField apellido;
     private principal.MaterialButton cerrar;
     public static app.bolivia.swing.JCTextField direccion;
+    public static app.bolivia.swing.JCTextField documento;
     public static app.bolivia.swing.JCTextField email;
     public static javax.swing.JLabel id;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -634,7 +875,6 @@ public class ModalClienteM extends javax.swing.JDialog {
     private org.edisoncor.gui.panel.Panel panel1;
     public static principal.MaterialButton registrar;
     public static app.bolivia.swing.JCTextField telefono;
-    public static componentes.org1.bolivia.combo.SComboBox tipo;
     public static javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 

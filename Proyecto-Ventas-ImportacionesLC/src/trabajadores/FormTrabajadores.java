@@ -326,7 +326,7 @@ public class FormTrabajadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_eliminarTodoActionPerformed
 
     private void nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoActionPerformed
-        ModalClienteM mp = new ModalClienteM(new JFrame(), true);
+        ModalTrabajadoresM mp = new ModalTrabajadoresM(new JFrame(), true);
         mp.titulo.setText("REGISTRAR");
         mp.registrar.setText("REGISTRAR");
         mp.setVisible(true);
@@ -350,7 +350,7 @@ public class FormTrabajadores extends javax.swing.JInternalFrame {
 
                 int fila = this.tabla.getSelectedRow();
 
-                ModalClienteM mp = new ModalClienteM(new JFrame(), true);
+                ModalTrabajadoresM mp = new ModalTrabajadoresM(new JFrame(), true);
                 mp.id.setText(this.tabla.getValueAt(fila, 0).toString());
                 mp.nombre.setText(this.tabla.getValueAt(fila, 1).toString());
                 mp.apellido.setText(this.tabla.getValueAt(fila, 2).toString());
