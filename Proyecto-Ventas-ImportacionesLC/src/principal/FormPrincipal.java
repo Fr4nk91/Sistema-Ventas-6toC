@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import productos.FormProductos;
-import salidas.FormSalidas;
+import ventas.FormReporteRangoVentas;
 import trabajadores.FormTrabajadores;
 import usuarios.FormUsuarios;
 import ventas.FormCorteCaja;
@@ -31,7 +31,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         public FormClientes cliente = null;
     public FormTrabajadores trabajador = null;
     public FormProductos producto = null;
-    private FormSalidas salidas = null;
+    private FormReporteRangoVentas salidas = null;
     private FormUsuarios usuarios = null;
     public static FormCorteCaja lista = null;
     public static FormVentas ventas = null;

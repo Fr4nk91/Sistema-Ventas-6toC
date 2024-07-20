@@ -10,8 +10,10 @@ public class ConexionBD {
 
     public Connection conexion() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conect = DriverManager.getConnection("jdbc:mysql://localhost/ventas_importacioneslc","root", ""); 
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conect = DriverManager.getConnection("jdbc:mysql://localhost/ventas_importacioneslc","root", ""); 
+            Class.forName("org.gjt.mm.mysql.Driver");
+            conect = DriverManager.getConnection("jdbc:mysql://localhost/ventas_importacioneslc", "root", "");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error en la conexión" + e);
         }

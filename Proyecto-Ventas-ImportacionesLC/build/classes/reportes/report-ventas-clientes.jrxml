@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FECHA_INICIO" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA_FIN" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    ventas.`fecha`,
+    ventas.`idventa`,
+    CONCAT(clientes.`nombre`, ' ', clientes.`apellido`) AS cliente_nombre_completo,
+    SUM(detalle_ventas.`precio_unitario` * detalle_ventas.`cantidad`) AS total_compras
+FROM
+    `clientes` clientes
+    INNER JOIN `ventas` ventas ON clientes.`idcliente` = ventas.`idcliente`
+    INNER JOIN `detalle_ventas` detalle_ventas ON ventas.`idventa` = detalle_ventas.`idventa`
+WHERE  STR_TO_DATE(ventas.`fecha`, '%d/%m/%Y') BETWEEN $P{FECHA_INICIO} AND $P{FECHA_FIN}
+GROUP BY
+    fecha, idventa, cliente_nombre_completo
+ORDER BY
+    fecha DESC;]]>
+	</queryString>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="idventa" class="java.lang.Integer"/>
+	<field name="cliente_nombre_completo" class="java.lang.String"/>
+	<field name="total_compras" class="java.lang.Double"/>
+	<group name="fecha">
+		<groupExpression><![CDATA[$F{fecha}]]></groupExpression>
+	</group>
+	<group name="idventa">
+		<groupExpression><![CDATA[$F{idventa}]]></groupExpression>
+	</group>
+	<group name="cliente_nombre_completo">
+		<groupExpression><![CDATA[$F{cliente_nombre_completo}]]></groupExpression>
+	</group>
+	<group name="total_compras_mes">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="237" height="79"/>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\proyectos\\java\\FRANKLIN\\Sistema-Ventas-6toC\\Proyecto-Ventas-ImportacionesLC\\src\\imagenes\\logoPrincipal.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="270" y="12" width="269" height="53"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE VENTAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="11" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[N VENTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="11" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="11" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="33" width="552" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="12" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="12" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{idventa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="12" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cliente_nombre_completo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="12" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{total_compras}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="34" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

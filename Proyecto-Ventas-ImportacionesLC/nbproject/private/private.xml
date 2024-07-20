@@ -4,13 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/FormVentas.java</file>
-            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/Venta.java</file>
-            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/DetalleVentaDAO.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/ReporteBoletaVenta.java</file>
             <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/VentaDAO.java</file>
-            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/usuarios/UsuarioDAO.java</file>
-            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/FormVentasBuscar.java</file>
-            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/DetalleVenta.java</file>
-            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/usuarios/FormTrabajadoresUsuario.java</file>
         </group>
     </open-files>
 </project-private>

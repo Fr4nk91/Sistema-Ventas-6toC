@@ -46,7 +46,7 @@ public class FormVentas extends javax.swing.JInternalFrame {
         jScrollPane1.getHorizontalScrollBar().setUI(new MyScrollbarUI());
         limpiaCampos();
         bloquearBotones(false);
-        Funciones.ocultarColumnas(tablaVentas, new int[]{0, 1, 3});
+        Funciones.ocultarColumnas(tablaVentas, new int[]{0, 1, 2});
     }
 
     /**
@@ -665,7 +665,8 @@ public class FormVentas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-       ReporteBoletaVenta.generateReporte(this.numVenta.getText());
+      if(!this.numVenta.getText().equals(""))
+        ReporteBoletaVenta.generateReporteZ(this.numVenta.getText());
     }//GEN-LAST:event_btnImprimirActionPerformed
 
 
@@ -735,6 +736,7 @@ public class FormVentas extends javax.swing.JInternalFrame {
         btnBuscarVenta.setEnabled(!habilitar);
         btnCancelar.setEnabled(habilitar);
         btnNuevo.setEnabled(!habilitar);
+        btnImprimir.setEnabled(!habilitar);     
     }
     
 
