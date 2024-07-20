@@ -76,7 +76,7 @@ ORDER BY
 			</rectangle>
 			<image>
 				<reportElement x="0" y="0" width="237" height="79"/>
-				<imageExpression class="java.lang.String"><![CDATA["D:\\proyectos\\java\\FRANKLIN\\Sistema-Ventas-6toC\\Proyecto-Ventas-ImportacionesLC\\src\\imagenes\\logoPrincipal.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["D:\\reportes\\Proyecto-Ventas-ImportacionesLC\\logoPrincipal.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="381" y="11" width="148" height="20"/>
