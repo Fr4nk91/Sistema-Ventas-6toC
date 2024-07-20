@@ -6,10 +6,17 @@
 package ventas;
 
 public class DetalleVenta {
-    public static String LISTAR = "SELECT * FROM detalle_ventas ORDER BY iddetalle_venta";
+    
+    
+    public static String LISTAR = "SELECT A.iddetalle_venta, A.idventa, A.idproducto, B.nombre, A.cantidad, A.precio_unitario,A.cantidad * A.precio_unitario AS total  "
+            + "FROM detalle_ventas A "
+            + "INNER JOIN productos B "
+            + "ON A.idproducto = B.idproducto"
+            + " WHERE A.idventa = ? ORDER BY A.iddetalle_venta";
+    
     public static String REGISTRAR = "INSERT INTO detalle_ventas(idventa, idproducto, cantidad, precio_unitario) VALUES(?,?,?,?)";
     public static String ACTUALIZAR = "UPDATE detalle_ventas SET idproducto=?, cantidad=?, precio_unitario=? WHERE iddetalle_venta=?";
-    public static String ELIMINAR = "DELETE FROM detalle_ventas WHERE iddetalle_venta = ?";
+    public static String ELIMINAR = "UPDATE detalle_ventas SET eliminado = 1 WHERE iddetalle_venta = ?";
     public static String ELIMINAR_TODO = "TRUNCATE TABLE detalle_ventas";
 
     private int iddetalle_venta;
@@ -17,7 +24,16 @@ public class DetalleVenta {
     private int idproducto;
     private int cantidad;
     private double precio_unitario;
+    private String nombre;
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
     // Getters y setters
     public int getIddetalle_venta() {
         return iddetalle_venta;
@@ -58,4 +74,11 @@ public class DetalleVenta {
     public void setPrecio_unitario(double precio_unitario) {
         this.precio_unitario = precio_unitario;
     }
+
+    @Override
+    public String toString() {
+        return "DetalleVenta{" + "iddetalle_venta=" + iddetalle_venta + ", idventa=" + idventa + ", idproducto=" + idproducto + ", cantidad=" + cantidad + ", precio_unitario=" + precio_unitario + ", nombre=" + nombre + '}';
+    }
+    
+    
 }

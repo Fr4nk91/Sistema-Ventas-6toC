@@ -86,9 +86,16 @@ public class ClienteDAO {
         return rsu;
     }
 
-    public static void listar(String busca) {
-        DefaultTableModel modelo = (DefaultTableModel) clientes.FormClientes.tabla.getModel();
-
+     public static void listar(String busca) {
+        listar(busca, true);
+    }
+    public static void listar(String busca, boolean defaultCliente) {
+         DefaultTableModel modelo;
+        if (defaultCliente) {
+            modelo = (DefaultTableModel) clientes.FormClientes.tabla.getModel();
+        }else{
+            modelo = (DefaultTableModel) ventas.FormVentasClientes.tabla.getModel();
+        }
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
@@ -157,30 +164,6 @@ public static boolean esDocumentoUnico(String documento, int idCliente) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return c;
-    }
-
-    public static void iniciarTransaccion() {
-        try {
-            cn.setAutoCommit(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public static void finalizarTransaccion() {
-        try {
-            cn.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public static void cancelarTransaccion() {
-        try {
-            cn.rollback();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }
 

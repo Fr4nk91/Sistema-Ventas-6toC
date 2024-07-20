@@ -15,10 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Rojeru San CL
- */
+
 public class ProductoDAO {
 
     static ConexionBD cc = new ConexionBD();
@@ -56,12 +53,13 @@ public class ProductoDAO {
             ps.setInt(6, uc.getId());
             rsu = ps.executeUpdate();
         } catch (SQLException ex) {
+             ex.printStackTrace();
         }
         System.out.println(sql);
         return rsu;
     }
     
-    public static int actualizarStock(Producto uc) {
+    public static int actualizarStock(Producto uc, Connection cn) {
         int rsu = 0;
         String sql = Producto.ACTUALIZAR_STOCK;
         try {
@@ -70,11 +68,12 @@ public class ProductoDAO {
             ps.setInt(2, uc.getId());
             rsu = ps.executeUpdate();
         } catch (SQLException ex) {
+             ex.printStackTrace();
         }
         System.out.println(sql);
         return rsu;
     }
-    
+
     public static int eliminar(int id) {
         int rsu = 0;
         String sql = Producto.ELIMINAR;
@@ -105,9 +104,16 @@ public class ProductoDAO {
         return rsu;
     }
 
-    public static void listar(String busca) {
-        DefaultTableModel modelo = (DefaultTableModel) productos.FormProductos.tabla.getModel();
-
+     public static void listar(String busca) {
+        listar(busca, true);
+    }
+    public static void listar(String busca, boolean defaultProducto) {
+        DefaultTableModel modelo;
+        if (defaultProducto) {
+            modelo = (DefaultTableModel) productos.FormProductos.tabla.getModel();
+        }else{
+            modelo = (DefaultTableModel) ventas.FormVentasProductos.tabla.getModel();
+        }
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
@@ -115,7 +121,7 @@ public class ProductoDAO {
         if (busca.equals("")) {
             sql = Producto.LISTAR;
         } else {
-            sql = "SELECT * FROM productos WHERE (idproducto LIKE'" + busca + "%' OR "
+            sql = "SELECT idproducto, nombre, descripcion, tipoproducto, precio, stock FROM productos WHERE (idproducto LIKE'" + busca + "%' OR "
                     + "nombre LIKE'" + busca + "%' OR descripcion LIKE'" + busca + "%' OR "
                     + "tipoproducto LIKE'" + busca + "%' OR precio LIKE'" + busca + "%' OR "
                     + "idproducto LIKE'" + busca + "%') "
@@ -155,28 +161,20 @@ public class ProductoDAO {
         }
         return c;
     }
-    
-    public static void iniciarTransaccion(){
+        public static int obtenerStock(String idProducto) {
+        int c = 0;
+        String SQL = "SELECT stock FROM productos WHERE idproducto="+idProducto;
+
         try {
-            cn.setAutoCommit(false);
+             Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+            while (rs.next()) {
+                c = rs.getInt(1);
+            }
+                      
         } catch (SQLException ex) {
             Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public static void finalizarTransaccion(){
-        try {
-            cn.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public static void cancelarTransaccion(){
-        try {
-            cn.rollback();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return c;
     }
 }

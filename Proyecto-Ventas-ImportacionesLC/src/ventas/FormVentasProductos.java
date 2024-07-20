@@ -11,14 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import productos.Producto;
+import productos.ProductoDAO;
 import tabla.EstiloTablaHeader;
 import tabla.EstiloTablaRenderer;
 import tabla.MyScrollbarUI;
 
-/**
- *
- * @author Rojeru San
- */
 public class FormVentasProductos extends javax.swing.JDialog {
 
     /**
@@ -39,8 +37,8 @@ public class FormVentasProductos extends javax.swing.JDialog {
         
         this.cantidadAlmacen.setVisible(false);
 
-        VentaDAO.listar("");
-        productos.ProductoDAO.iniciarTransaccion();
+        ProductoDAO.listar("", false);
+     //   productos.ProductoDAO.iniciarTransaccion();
 
         this.tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -53,6 +51,9 @@ public class FormVentasProductos extends javax.swing.JDialog {
         });
     }
 
+     public DetalleVenta getProductoSeleccionado() {
+        return productoSeleccionado;
+    }
     private void seleccionaFila(String id) {
         for (int i = 0; i < this.tabla.getRowCount(); i++) {
             if (id.equals(this.tabla.getValueAt(i, 0).toString())) {
@@ -80,7 +81,7 @@ public class FormVentasProductos extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        btnMenos = new principal.MaterialButtonCircle();
+        btnAgregar = new principal.MaterialButtonCircle();
         buscar = new app.bolivia.swing.JCTextField();
         jLabel3 = new javax.swing.JLabel();
         txtCantidad = new app.bolivia.swing.JCTextField();
@@ -200,18 +201,18 @@ public class FormVentasProductos extends javax.swing.JDialog {
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 960, 260));
 
-        btnMenos.setBackground(new java.awt.Color(58, 159, 171));
-        btnMenos.setForeground(new java.awt.Color(255, 255, 255));
-        btnMenos.setText("+");
-        btnMenos.setToolTipText("<html> <head> <style> #contenedor{background:#3A9FAB;color:white; padding-left:10px;padding-right:10px;margin:0; padding-top:5px;padding-bottom:5px;} </style> </head> <body> <h4 id=\"contenedor\">Añadir</h4> </body> </html>");
-        btnMenos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnMenos.setFont(new java.awt.Font("Roboto Medium", 1, 24)); // NOI18N
-        btnMenos.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setBackground(new java.awt.Color(58, 159, 171));
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setText("+");
+        btnAgregar.setToolTipText("<html> <head> <style> #contenedor{background:#3A9FAB;color:white; padding-left:10px;padding-right:10px;margin:0; padding-top:5px;padding-bottom:5px;} </style> </head> <body> <h4 id=\"contenedor\">Añadir</h4> </body> </html>");
+        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnAgregar.setFont(new java.awt.Font("Roboto Medium", 1, 24)); // NOI18N
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMenosActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnMenos, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 70, 60, 60));
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 70, 60, 60));
 
         buscar.setBorder(null);
         buscar.setForeground(new java.awt.Color(58, 159, 171));
@@ -262,7 +263,7 @@ public class FormVentasProductos extends javax.swing.JDialog {
     }//GEN-LAST:event_cerrarActionPerformed
 
     private void buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyReleased
-        VentaDAO.listar(this.buscar.getText());
+        ProductoDAO.listar(this.buscar.getText(), false);
     }//GEN-LAST:event_buscarKeyReleased
 
     private void buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyTyped
@@ -275,7 +276,7 @@ public class FormVentasProductos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_buscarKeyTyped
 
-    private void btnMenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenosActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (this.tabla.getRowCount() < 1) {
             ErrorAlert er = new ErrorAlert(new JFrame(), true);
             er.titulo.setText("ADVERTENCIA");
@@ -298,14 +299,7 @@ public class FormVentasProductos extends javax.swing.JDialog {
                     er.setVisible(true);
                 } else {
                     int fila = this.tabla.getSelectedRow();
-
-                    if (this.tabla.getValueAt(fila, 5).toString().equals("")) {
-                     //   ventas.VentaDAO.enviar(Integer.parseInt(this.tabla.getValueAt(fila, 0).toString()), Integer.parseInt(this.txtCantidad.getText()));
-                        this.txtCantidad.setText("");
-                        this.dispose();
-                    } else {
-
-                        productos.Producto s = new productos.Producto();
+                        this.productoSeleccionado = new DetalleVenta();
 
                         int total = Integer.parseInt(this.cantidadAlmacen.getText()) - Integer.parseInt(this.txtCantidad.getText());
 
@@ -316,25 +310,27 @@ public class FormVentasProductos extends javax.swing.JDialog {
                             er.msj1.setText("");
                             er.setVisible(true);
                         } else {
-                            int fila1 = this.tabla.getSelectedRow();
-                            s.setStock(String.valueOf(total));
-                            s.setId(Integer.parseInt(this.tabla.getValueAt(fila1, 0).toString()));
-
-                            int opcion = productos.ProductoDAO.actualizarStock(s);
-                            if (opcion != 0) {
-                                String fila2 = this.tabla.getValueAt(fila1, 0).toString();
-                                VentaDAO.listar("");
-                                seleccionaFila(fila2);
+                          //  int fila1 = this.tabla.getSelectedRow();
+                               
+                            this.productoSeleccionado.setCantidad(Integer.parseInt(this.txtCantidad.getText()));
+                            this.productoSeleccionado.setIdproducto(Integer.parseInt(this.tabla.getValueAt(fila, 0).toString()));
+                            this.productoSeleccionado.setNombre(this.tabla.getValueAt(fila, 1).toString());
+                            this.productoSeleccionado.setPrecio_unitario(Double.parseDouble(this.tabla.getValueAt(fila, 4).toString()));    
+                        //    int opcion = productos.ProductoDAO.actualizarStock(s);
+                            //if (opcion != 0) {
+                              //  String fila2 = this.tabla.getValueAt(fila, 0).toString();
+                           //     VentaDAO.listar("");
+                               seleccionaFila(String.valueOf(fila));
                                // ventas.VentaDAO.enviar(Integer.parseInt(this.tabla.getValueAt(fila, 0).toString()), Integer.parseInt(this.txtCantidad.getText()));
                                 this.txtCantidad.setText("");
                                 this.dispose();
-                            }
+                           // }
                         }
-                    }
+                    
                 }
             }
         }
-    }//GEN-LAST:event_btnMenosActionPerformed
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char num = evt.getKeyChar();
@@ -354,13 +350,7 @@ public class FormVentasProductos extends javax.swing.JDialog {
             } else {
                 int fila = this.tabla.getSelectedRow();
 
-                if (this.tabla.getValueAt(fila, 5).toString().equals("")) {
-                 //   ventas.VentaDAO.enviar(Integer.parseInt(this.tabla.getValueAt(fila, 0).toString()), Integer.parseInt(this.txtCantidad.getText()));
-                    this.txtCantidad.setText("");
-                    this.dispose();
-                } else {
-
-                    productos.Producto s = new productos.Producto();
+                this.productoSeleccionado = new DetalleVenta();
 
                     int total = Integer.parseInt(this.cantidadAlmacen.getText()) - Integer.parseInt(this.txtCantidad.getText());
 
@@ -371,21 +361,23 @@ public class FormVentasProductos extends javax.swing.JDialog {
                         er.msj1.setText("");
                         er.setVisible(true);
                     } else {
-                        int fila1 = this.tabla.getSelectedRow();
-                        s.setStock(String.valueOf(total));
-                        s.setId(Integer.parseInt(this.tabla.getValueAt(fila1, 0).toString()));
+                        //int fila1 = this.tabla.getSelectedRow();
+                            this.productoSeleccionado.setCantidad(Integer.parseInt(this.txtCantidad.getText()));
+                            this.productoSeleccionado.setIdproducto(Integer.parseInt(this.tabla.getValueAt(fila, 0).toString()));
+                            this.productoSeleccionado.setNombre(this.tabla.getValueAt(fila, 1).toString());
+                            this.productoSeleccionado.setPrecio_unitario(Double.parseDouble(this.tabla.getValueAt(fila, 4).toString())); 
 
-                        int opcion = productos.ProductoDAO.actualizarStock(s);
-                        if (opcion != 0) {
-                            String fila2 = this.tabla.getValueAt(fila1, 0).toString();
-                            VentaDAO.listar("");
-                            seleccionaFila(fila2);
+                      //  int opcion = productos.ProductoDAO.actualizarStock(s);
+                     //   if (opcion != 0) {
+                         //   String fila2 = this.tabla.getValueAt(fila1, 0).toString();
+                           // VentaDAO.listar("");
+                            seleccionaFila(String.valueOf(fila));
                           //  ventas.VentaDAO.enviar(Integer.parseInt(this.tabla.getValueAt(fila, 0).toString()), Integer.parseInt(this.txtCantidad.getText()));
                             this.txtCantidad.setText("");
                             this.dispose();
-                        }
+                       // }
                     }
-                }
+                
             }
         }
     }//GEN-LAST:event_tablaMouseClicked
@@ -496,7 +488,7 @@ public class FormVentasProductos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private principal.MaterialButtonCircle btnMenos;
+    private principal.MaterialButtonCircle btnAgregar;
     public static app.bolivia.swing.JCTextField buscar;
     private javax.swing.JLabel cantidadAlmacen;
     private principal.MaterialButton cerrar;
@@ -512,4 +504,5 @@ public class FormVentasProductos extends javax.swing.JDialog {
     public static javax.swing.JTable tabla;
     private app.bolivia.swing.JCTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
+    private DetalleVenta productoSeleccionado;
 }

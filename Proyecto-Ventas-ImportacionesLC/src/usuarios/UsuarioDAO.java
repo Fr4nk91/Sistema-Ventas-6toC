@@ -16,11 +16,9 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import login.FormLogin;
+import principal.Escritorio;
 
-/**
- *
- * @author Rojeru San CL
- */
+
 public class UsuarioDAO {
 
     static ConexionBD cc = new ConexionBD();
@@ -134,12 +132,14 @@ public class UsuarioDAO {
 
     public static void verifica(String usuario, String pas, JFrame login) {
         String user = "", pass = "", tipo_us = "";
+        String idUsuario = "";
         try {
             String sql = "SELECT idusuario, idtrabajador, usuario, password, tipousuario FROM usuarios WHERE usuario = '" + usuario + "' AND eliminado=0";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {
+                idUsuario = rs.getString(1);
                 user = rs.getString(3);
                 pass = rs.getString(4);
                 tipo_us = rs.getString(5);
@@ -148,11 +148,15 @@ public class UsuarioDAO {
             if (user.equals(usuario) && pass.equals(pas)) {
                 if (tipo_us.equals("ADMINISTRADOR")) {
                     login.dispose();
+                    Escritorio.idUsuario = idUsuario;
+                    Escritorio.usuario = usuario;
                     new principal.FormPrincipalAdministrador().setVisible(true);
                 }
 
                 if (tipo_us.equals("NORMAL")) {
                     login.dispose();
+                    Escritorio.idUsuario = idUsuario;
+                    Escritorio.usuario = usuario;
                     new principal.FormPrincipal().setVisible(true);
                 }
             } else {
@@ -167,7 +171,7 @@ public class UsuarioDAO {
         }
     }
     
-        public static void listarTrabajadores(String busca) {
+    public static void listarTrabajadores(String busca) {
         DefaultTableModel modelo = (DefaultTableModel) FormTrabajadoresUsuario.tabla.getModel();
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);

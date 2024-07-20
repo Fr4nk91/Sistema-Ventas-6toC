@@ -140,6 +140,7 @@ public class About extends javax.swing.JDialog {
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton2.setName(""); // NOI18N
+        jButton2.setVisible(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -153,6 +154,7 @@ public class About extends javax.swing.JDialog {
         jButton1.setToolTipText("<html> <head> <style> #contenedor{background:white;color:black; padding-left:10px;padding-right:10px;margin:0; padding-top:5px;padding-bottom:5px;} </style> </head> <body> <h4 id=\"contenedor\">Ir a youtube</h4> </body> </html>");
         jButton1.setBorder(null);
         jButton1.setContentAreaFilled(false);
+        jButton1.setVisible(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -216,22 +218,6 @@ public class About extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_cerrarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            Desktop.getDesktop().browse(new URI("https://www.facebook.com/"));
-        } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(About.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            Desktop.getDesktop().browse(new URI("https://www.youtube.com/"));
-        } catch (IOException | URISyntaxException ex) {
-            Logger.getLogger(About.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         task = new TimerTask() {
             @Override
@@ -248,6 +234,22 @@ public class About extends javax.swing.JDialog {
         timer = new Timer();
         timer.schedule(task, 0, 2);
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.youtube.com/"));
+        } catch (IOException | URISyntaxException ex) {
+            Logger.getLogger(About.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.facebook.com/"));
+        } catch (IOException | URISyntaxException ex) {
+            Logger.getLogger(About.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

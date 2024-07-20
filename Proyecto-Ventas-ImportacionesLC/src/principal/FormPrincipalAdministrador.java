@@ -13,16 +13,16 @@ import clientes.FormClientes;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import static principal.FormPrincipal.escritorio;
+import static principal.FormPrincipal.estacerrado;
+import static principal.FormPrincipal.ventas;
 import salidas.FormSalidas;
 import trabajadores.FormTrabajadores;
 import usuarios.FormUsuarios;
 import ventas.FormCorteCaja;
 import ventas.FormVentas;
 
-/**
- *
- * @author Rojeru San
- */
+
 public class FormPrincipalAdministrador extends javax.swing.JFrame {
 
     boolean b = true;
@@ -51,13 +51,14 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
     }
 
     /**
-     * Creates new form Principal
+     * Creates new form FormPrincipalAdministrador
      */
     public FormPrincipalAdministrador() {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/logo-icono.png")).getImage());
         this.setExtendedState(MAXIMIZED_BOTH);
         FadeEffect.fadeInFrame(this, 50, 0.1f);
+        this.lblUsuario.setText(Escritorio.usuario);
     }
 
     /**
@@ -75,6 +76,7 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
         minimizar = new principal.MaterialButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnProductos = new principal.MaterialButtomRectangle();
         btnGastos = new principal.MaterialButtomRectangle();
@@ -127,6 +129,10 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo-icono1.png"))); // NOI18N
 
+        lblUsuario.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario.setText("jLabel6");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -136,7 +142,9 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(minimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,7 +161,9 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblUsuario))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -372,7 +382,14 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        new ventas.ModalElegir(this, true).setVisible(true);
+        if (estacerrado(ventas)) {
+            ventas = new FormVentas();
+            int width = escritorio.getWidth();
+            int Height = escritorio.getHeight();
+            ventas.setSize(width, Height);
+            escritorio.add(ventas);
+            ventas.show();
+        }
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
@@ -522,6 +539,7 @@ public class FormPrincipalAdministrador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblUsuario;
     private principal.MaterialButton minimizar;
     // End of variables declaration//GEN-END:variables
 }

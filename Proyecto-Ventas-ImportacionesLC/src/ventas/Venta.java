@@ -7,18 +7,28 @@ package ventas;
 
 
 public class Venta {
-    public static String LISTAR = "SELECT * FROM ventas ORDER BY fecha";
-    public static String LISTAR1 = "SELECT * FROM ventas, producto WHERE id_producto = idproducto";
-    public static String REGISTRAR = "INSERT INTO ventas(idventa, idcliente, idusuario, fecha, total) VALUES(?,?,?,?,?)";
+    public static String LISTAR = "SELECT A.idventa, A.idcliente, CONCAT(B.nombre, ' ', B.apellido) AS cliente, "
+            + "A.idusuario, CONCAT(D.nombre, ' ', D.apellido) AS trabajador, A.fecha, "
+            + "SUM(E.cantidad * E.precio_unitario) AS total "
+            + "FROM ventas A INNER JOIN clientes B ON A.idcliente = B.idcliente "
+            + "INNER JOIN usuarios C ON A.idusuario = C.idusuario "
+            + "INNER JOIN trabajadores D ON C.idtrabajador = D.idtrabajador "
+            + "INNER JOIN detalle_ventas E ON A.idventa = E.idventa "
+            + "WHERE A.eliminado = 0 "
+            + "AND E.eliminado = 0 "
+            + "GROUP BY A.idventa, A.idcliente, cliente, A.idusuario, trabajador, A.fecha "
+            + "ORDER BY A.fecha";
+   
+    public static String REGISTRAR = "INSERT INTO ventas(idcliente, idusuario, fecha) VALUES(?,?,?)";
     public static String ACTUALIZAR = "UPDATE ventas SET idcliente=?, idusuario=?, fecha=?, total=? WHERE idventa=?";
-    public static String ELIMINAR = "DELETE FROM ventas WHERE idventa = ?";
+    public static String ELIMINAR = "UPDATE ventas SET eliminado = 1 WHERE idventa = ?";
     public static String ELIMINAR_TODO = "TRUNCATE TABLE ventas";
 
     private int idventa;
     private int idcliente;
     private int idusuario;
     private String fecha;
-    private double total;
+ 
 
     // Getters y Setters
     public int getIdventa() {
@@ -53,11 +63,10 @@ public class Venta {
         this.fecha = fecha;
     }
 
-    public double getTotal() {
-        return total;
+    @Override
+    public String toString() {
+        return "Venta{" + "idventa=" + idventa + ", idcliente=" + idcliente + ", idusuario=" + idusuario + ", fecha=" + fecha + '}';
     }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
+    
+    
 }

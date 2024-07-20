@@ -14,10 +14,7 @@ import tabla.EstiloTablaHeader;
 import tabla.EstiloTablaRenderer;
 import tabla.MyScrollbarUI;
 
-/**
- *
- * @author Rojeru San
- */
+
 public class FormProductos extends javax.swing.JInternalFrame {
 
     /**

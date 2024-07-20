@@ -14,10 +14,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 
-/**
- *
- * @author Rojeru San
- */
 public class ModalProductoM extends javax.swing.JDialog {
 
     Timer timer = null;

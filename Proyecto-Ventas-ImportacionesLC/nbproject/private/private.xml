@@ -3,15 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/productos/FormProductos.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/clientes/FormClientes.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/clientes/Cliente.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/productos/Producto.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/clientes/ClienteDAO.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/trabajadores/ModalClienteM.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/productos/ProductoDAO.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/productos/ModalProductoM.java</file>
-            <file>file:/C:/Users/jmmt/Documents/Proyecto-Ventas-ImportacionesLC/src/trabajadores/FormTrabajadores.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/FormVentas.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/Venta.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/DetalleVentaDAO.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/VentaDAO.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/usuarios/UsuarioDAO.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/FormVentasBuscar.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/ventas/DetalleVenta.java</file>
+            <file>file:/D:/proyectos/java/FRANKLIN/Sistema-Ventas-6toC/Proyecto-Ventas-ImportacionesLC/src/usuarios/FormTrabajadoresUsuario.java</file>
         </group>
     </open-files>
 </project-private>

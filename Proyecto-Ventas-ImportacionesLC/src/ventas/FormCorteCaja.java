@@ -36,7 +36,7 @@ public class FormCorteCaja extends javax.swing.JInternalFrame {
         jScrollPane1.getVerticalScrollBar().setUI(new MyScrollbarUI());
         jScrollPane1.getHorizontalScrollBar().setUI(new MyScrollbarUI());
 
-        VentaDAO.listarVentas("");
+       // VentaDAO.listarVentas("");
    //     VentaDAO.corteCaja();
 
         this.tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -347,7 +347,7 @@ public class FormCorteCaja extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyReleased
-        VentaDAO.listarVentas(this.buscar.getText());
+       // VentaDAO.listarVentas(this.buscar.getText());
      //   VentaDAO.corteCaja();
     }//GEN-LAST:event_buscarKeyReleased
 
